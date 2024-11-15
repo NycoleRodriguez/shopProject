@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from .models import Cliente, Produto, Venda
 from .forms import ClienteForm, ProdutoForm, VendaForm
 
+
 def cliente_list(request):
     clientes = Cliente.objects.all()
     return render(request, 'clientes.html', {'clientes': clientes})
+
 
 def cliente_form(request, id=None):
     cliente = Cliente.objects.get(id=id) if id else None
@@ -16,6 +18,24 @@ def cliente_form(request, id=None):
     else:
         form = ClienteForm(instance=cliente)
     return render(request, 'cliente_form.html', {'form': form})
+
+
+def produto_list(request):
+    produto = Produto.objects.all()
+    return render(request, 'produtos.html', {'produtos': produto})
+
+
+def produto_form(request, id=None):
+    produto = Produto.objects.get(Produto, id=id) if id else None
+    if request.method == 'POST':
+        form = ProdutoForm(request.POST, instance=produto)
+        if form.is_valid():
+            form.save()
+            return redirect('produto_list')
+    else:
+        form = ProdutoForm(instance=produto)
+    return render(request, 'produto_form.html', {'form': form})
+
 
 # Similar para Produto e Venda
 # Funções `produto_list`, `produto_form`, `venda_list`, `venda_form`
