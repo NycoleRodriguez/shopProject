@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas</title>
+</head>
+<body>
+    <h1>Página de Vendas</h1>
+
+
+    <h2>Vendas Registradas</h2>
+    <ul>
+        {% for venda in vendas %}
+            <li>Venda #{{ venda.id }}: Cliente - {{ venda.cliente.nome }}, Produto - {{ venda.produto.nome }}, Quantidade - {{ venda.quantidade }}</li>
+        {% empty %}
+            <li>Nenhuma venda registrada.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Cadastrar Nova Venda</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar Venda</button>
+    </form>
+
+
+</body>
+</html>

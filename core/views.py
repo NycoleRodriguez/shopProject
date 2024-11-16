@@ -36,9 +36,20 @@ def produto_form(request, id=None):
         form = ProdutoForm(instance=produto)
     return render(request, 'produto_form.html', {'form': form})
 
+def vendas(request):
+    vendas = Venda.objects.all()
 
-# Similar para Produto e Venda
-# Funções `produto_list`, `produto_form`, `venda_list`, `venda_form`
+    if request.method == 'POST':
+        form = VendaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('vendas')
+    else:
+        form = VendaForm()
+
+    return render(request, 'vendas.html', {'vendas': vendas, 'form': form})
+
+
 from django.shortcuts import render
 
 # Create your views here.
